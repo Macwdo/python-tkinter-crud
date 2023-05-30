@@ -30,47 +30,47 @@ class CRUDApp:
         self.janela.configure(bg="#F2F2F2")
 
     def criar_campos(self):
-        self.matricula_label = tk.Label(
+        self.id_label = tk.Label(
             self.janela,
-            text="Matrícula:",
+            text="Id:",
             font=("Arial", 12),
             bg="#F2F2F2"
         )
-        self.matricula_label.place(relx=0.25, rely=0.1, anchor=tk.CENTER)
+        self.id_label.place(relx=0.25, rely=0.1, anchor=tk.CENTER)
 
-        self.matricula_entry = tk.Entry(
+        self.id_entry = tk.Entry(
             self.janela,
             font=("Arial", 12)
         )
-        self.matricula_entry.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
+        self.id_entry.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
 
-        self.nome_label = tk.Label(
+        self.produto_label = tk.Label(
             self.janela,
-            text="Nome:",
+            text="produto:",
             font=("Arial", 12),
             bg="#F2F2F2"
         )
-        self.nome_label.place(relx=0.25, rely=0.2, anchor=tk.CENTER)
+        self.produto_label.place(relx=0.25, rely=0.2, anchor=tk.CENTER)
 
-        self.nome_entry = tk.Entry(
+        self.produto_entry = tk.Entry(
             self.janela,
             font=("Arial", 12)
         )
-        self.nome_entry.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
+        self.produto_entry.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
 
-        self.nota_label = tk.Label(
+        self.preco_label = tk.Label(
             self.janela,
-            text="Nota:",
+            text="preco:",
             font=("Arial", 12),
             bg="#F2F2F2"
         )
-        self.nota_label.place(relx=0.25, rely=0.3, anchor=tk.CENTER)
+        self.preco_label.place(relx=0.25, rely=0.3, anchor=tk.CENTER)
 
-        self.nota_entry = tk.Entry(
+        self.preco_entry = tk.Entry(
             self.janela,
             font=("Arial", 12)
         )
-        self.nota_entry.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
+        self.preco_entry.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
 
     def criar_botoes(self):
         self.adicionar_button = tk.Button(
@@ -113,19 +113,19 @@ class CRUDApp:
         self.registros_listbox.place(relx=0.5, rely=0.6, anchor=tk.CENTER)
 
     def adicionar_registro(self):
-        matricula = self.matricula_entry.get()
-        nome = self.nome_entry.get()
-        nota = self.nota_entry.get()
+        id = self.id_entry.get()
+        produto = self.produto_entry.get()
+        preco = self.preco_entry.get()
 
-        matriculas = [matricula[0] for matricula in self.database.read()]
+        ids = [id[0] for id in self.database.read()]
 
-        if matricula in matriculas:
-            messagebox.showerror("Error", "Já existe usuario com essa matricula")
+        if id in ids:
+            messagebox.showerror("Error", "Já existe usuario com essa id")
             self.limpar_campos()
             self.exibir_registros()
 
-        if matricula and nome and nota:
-            self.database.create(matricula, nome, nota)
+        if id and produto and preco:
+            self.database.create(id, produto, preco)
             messagebox.showinfo("Sucesso", "Registro adicionado com sucesso!")
             self.limpar_campos()
             self.exibir_registros()
@@ -138,12 +138,12 @@ class CRUDApp:
             messagebox.showerror("Erro", "Nenhum registro selecionado.")
             return
 
-        matricula = self.matricula_entry.get()
-        nome = self.nome_entry.get()
-        nota = self.nota_entry.get()
+        id = self.id_entry.get()
+        produto = self.produto_entry.get()
+        preco = self.preco_entry.get()
 
-        if matricula and nome and nota:
-            self.database.update(matricula, nome, nota)
+        if id and produto and preco:
+            self.database.update(id, produto, preco)
             messagebox.showinfo("Sucesso", "Registro atualizado com sucesso!")
             self.limpar_campos()
             self.exibir_registros()
@@ -158,22 +158,22 @@ class CRUDApp:
 
         indice = selecionado[0]
         registro = self.registros[indice]
-        matricula = registro[0]
+        id = registro[0]
 
-        self.database.delete(matricula)
+        self.database.delete(id)
         messagebox.showinfo("Sucesso", "Registro apagado com sucesso!")
         self.limpar_campos()
         self.exibir_registros()
 
     def limpar_campos(self):
-        self.matricula_entry.delete(0, tk.END)
-        self.nome_entry.delete(0, tk.END)
-        self.nota_entry.delete(0, tk.END)
+        self.id_entry.delete(0, tk.END)
+        self.produto_entry.delete(0, tk.END)
+        self.preco_entry.delete(0, tk.END)
 
     def exibir_registros(self):
         self.registros_listbox.delete(0, tk.END)
         self.registros = self.database.read()
 
         for registro in self.registros:
-            matricula, nome, nota = registro
-            self.registros_listbox.insert(tk.END, f"Matrícula: {matricula}, Nome: {nome}, Nota: {nota}")
+            id, produto, preco = registro
+            self.registros_listbox.insert(tk.END, f"Id: {id}, produto: {produto}, preco: {preco}")

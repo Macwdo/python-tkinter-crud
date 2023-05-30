@@ -9,13 +9,13 @@ def fazer_login():
 
     if username == "usuario" and password == "senha":
         messagebox.showinfo("Login", "Login bem-sucedido!")
-        subprocess.call(["python3", "main.py"])
+        subprocess.call(["python", "main.py"])
     else:
         messagebox.showerror("Login", "Credenciais inválidas.")
 
 # Criação da janela
 janela = tk.Tk()
-janela.title("Tela de Login")
+janela.title("Login do Gordão")
 
 # Definir a resolução e centralizar a janela
 largura = 1360
